@@ -1,8 +1,5 @@
-#include "key.h"
-#include "proj.h"
-#include "rsa.h"
-#ifndef KEY_H
-#define KEY_H
+#include"key.h"
+
 
 int main(int argc,char *argv[]){
     KEY *key = &(KEY){.m = 7, .n= 31}; // initialiser key afin de ne pas avoir
@@ -22,4 +19,3 @@ void init_key(KEY* key, long val, long n){
 
 
 }
-#endif

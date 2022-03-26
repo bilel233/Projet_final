@@ -1,12 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "rsa.h"
-#include "proj.h"
-#include <math.h>
-#include <time.h>
-#include <string.h>
-#ifndef RSA_H
-#define RSA_H
+#include"rsa.h"
+#define DESTINATION 60
+
 
 
 long extended_gcd(long a,long t,long *u, long *v){
@@ -22,71 +16,24 @@ long extended_gcd(long a,long t,long *u, long *v){
     *v = uPrim;
     return uPrim;
 }
-uint16_t gcd(uint16_t a, uint32_t b){
 
-	uint16_t temp;
-	if (a > b)
-	{
-		temp = a;
-		a = b;
-		b = temp;
-	}
-	for (uint16_t i = a; i > 0; i--)
-	{
-		if (a % i == 0 && b % i == 0)
-            return i;
-	}
-}
-void generate_key_values(uint16_t e, uint16_t *p, uint16_t *q, uint32_t *n, uint32_t *phi){
-    // generere la cle publique puis la cle privee
-    do{
-        *p = is_prime_naive(*p);
-        do{
-            *q=is_prime_naive(*q);
-           
-        }
-        while(*p ==*q);
-        *n = *p * *q;
-        *phi = *n - *p - *q + 1;
+void generate_key_values(long p,long q,long* n,long *s,long* u){
+    /* genere la cle publique puis la cle privee a partir des nombres premiers p et q en suivant le protocole RSA */
+
+    *n = p*q;
+    long t = (p-1)*(q-1);
+    *s = rand_long(2,t);
+    long v;
+    while (extended_gcd(*s,t,u,&v)!=1){
+        *s = rand_long(2,t);
     }
-   while (gcd(e,*phi) != 1);
-
+    return;
 }
-long* encrypt(char* chaine, long s, long n){
-    long *t;
-    int a;
-    /* chiffre la chaine avec la cle publique ormis \0 */
-    char c= chaine[0];
-    while (c != '\0'){
-        int a = (int)c;
-        t[c] = modpow(n,s,n);
-        c++;
-    }
-    return t;
-    
-}
-char* decrypt(long* crypted, int size,long u, long n){
-    char *messageDechifree;
-    for(long i=0;i<size;i++){
-        for(long i=0;i<size;i++){ // parcours du message chifree
-            modpow(crypted[i],u,n);
-        }
-    }
-    return messageDechifree;
-}
-
-int main(){
-    printf("long = %ld octets\n",sizeof(long));
-    printf("int = %lu octets\n",sizeof(int));
-   
-    return 0;
-}
-
-
-
-/*MES FONCTIONS DECRYPT ET ENCRYPT
-	long* encrypt(char* chaine, long s, long n)
+// alloc dynamique
+long* encrypt(char* chaine, long s, long n)
 {
+    /* chiffre une chaine de caractere a l'aide de la cle publique 
+        */
 	long *tab=malloc(sizeof(long)*strlen(chaine));
     	if(!tab)
 	{
@@ -103,16 +50,27 @@ int main(){
     	
 	return tab;
 } 
-
+// alloc dynamique
 char* decrypt(long* crypted,int size, long u, long n)
 {	
+    /* dechiffre un message a l'aid ede la cle secrete */
 	char *res=malloc(sizeof(char)*(size+1));
-	
-  	for(int i=0;i<size;i++)
-	{
-    		res[i]=(char)modpow(crypted[i],u,n);
-  	}
-  	return res+'\0';
+    char *dest = (char*)malloc(sizeof(char)*DESTINATION);
+    if (res == NULL && dest == NULL) return NULL;
+    else{
+  	    for(int i=0;i<size;i++)
+	    {
+    	    res[i]=(char)modpow(crypted[i],u,n);
+  	    }
+    }
+      strcat(dest,res);
+    return dest;   
 }
-/*
-#endif
+
+int main(){
+    printf("long = %ld octets\n",sizeof(long));
+    printf("int = %lu octets\n",sizeof(int));
+   
+    return 0;
+}
+

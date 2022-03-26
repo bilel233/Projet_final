@@ -16,5 +16,7 @@ char* ecritureModpowNaive(char *fichier);
 int witness(long a, long b,long d,long p);
 char *ecritureModpow(char* fichier);
 long rand_long(long low,long up);
-long random_prime_number(int lowsize, int upsize, int k);
+long random_prime_number(int low_size, int up_size, int k);
+long power(long a,long b);
+int is_prime_miller(long p, int k);
 #endif

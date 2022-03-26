@@ -64,7 +64,19 @@ long modpow(long a, long m, long n){
     
 }
 
-
+long random_prime_number(int low_size, int up_size, int k){
+    //retourne un nombre premier de taille comprise entre low size et up size
+    long low =(long)(power(2,low_size-1));
+    long up = (long)(power(2,up_size -1));
+    long res = rand_long(low,up);
+    while(is_prime_miller(res,k)==0){
+        res = rand_long(low,up);
+    }
+    if (is_prime_naive(res)==0){
+        printf("non premier\n");
+    }
+    return res;
+}
 
 int witness(long a, long b,long d,long p){
     /* renvoie 1 si a est un temoin de Miller ; O sinon
@@ -85,50 +97,45 @@ long rand_long(long low,long up){
     /* renvoie un entier generes aleatoirement entre low et up
         */
 
-    return rand() % (up - low +1)+low;
+    long val = (long) rand() % (up-low+1)-low;
+    return val;
 }
-int is_prime_miller(long p, int k) { 
-    /* renvoie 0 si un temoin de Miller est trouve. 1 sinon
-        */
-    if (p == 2) {
-        return 1; 
+long power(long a,long b){
+    long cpt=1;
+    for(int i = 0;i<=b;i++){
+        cpt*=a;
+        
     }
-    if (!(p & 1) || p <= 1) { //on verifie que p est impair et different de 1 return 0;
+    return cpt;
+}
+int is_prime_miller(long p, int k){
+    /* realise le test de miller-Rabin */
+    if (p == 2){
+        return 1;
+    }
+    if(!(p & 1) || p <= 1){
         return 0;
+
     }
-        //on determine b et d :
+    // on determine b et d
     long b = 0;
-    long d = p - 1;
-    while (!(d & 1)){ //tant que d n’est pas impair
-        d = d/2;
-        b=b+1; 
+    long d = p-1;
+    while(!(d & 1)){//tant que d n’est pas impair
+    d = d / 2;
+    b+=1;
     }
     // On genere k valeurs pour a, et on teste si c’est un temoin :
     long a;
     int i;
-    for(i = 0;i<k;i++){
+    for(i=0;i<k;i++){
         a = rand_long(2, p-1);
-        if(witness(a,b,d,p)){ 
+        if(witness(a,b,d,p)){
             return 0;
-       }
+        }
     }
-return 1; 
+    return 1;
 }
-
-
-long random_prime_number(int lowsize, int upsize, int k){
-    int v;
-    //retourne un nombre premier de taille comprise entre low size et up size
-    for(long i = 8;i<= 15;i++){
-        long val = rand_long(lowsize,upsize);
-        v=is_prime_miller(val,k);
-    }
-   
-return v == 1;
-}
-
-
-
+    
 int main(){
     return 0;
 }
