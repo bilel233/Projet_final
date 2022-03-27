@@ -53,7 +53,7 @@ long* encrypt(char* chaine, long s, long n)
 // alloc dynamique
 char* decrypt(long* crypted,int size, long u, long n)
 {	
-    /* dechiffre un message a l'aid ede la cle secrete */
+    /* dechiffre un message a l'aide de la cle secrete */
 	char *res=malloc(sizeof(char)*(size+1));
     char *dest = (char*)malloc(sizeof(char)*DESTINATION);
     if (res == NULL && dest == NULL) return NULL;
