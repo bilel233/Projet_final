@@ -14,6 +14,17 @@ typedef struct key  {
     long n;
 }KEY;
 
+typedef struct signature{
+    long* content;
+    long size;
+}SIGNATURE;
+
 void init_key(KEY* key, long val, long n);
+void init_pair_keys(KEY* pkey, KEY* skey, long low_size,long up_size);
+char* key_to_str(KEY* key);
+SIGNATURE* init_signitature(long* content,int size);
+SIGNATURE* sign(char* mess,KEY* sKey);
+void free_signature(SIGNATURE* sgn);
+
 
 #endif

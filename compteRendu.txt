@@ -63,7 +63,7 @@ On decompose l'algorithme de miller-Rabin de cette maniere :
 
 
 
-|||||||||||||||||||||||||||| Exercice 2 - implementation du protocome RSA ||||||||||||||||||||||||||||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Exercice 2 - implementation du protocome RSA ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 Implementation de l'algorithme d'Euclide.   Euclide(a,b)
 1|/|rm|.  r0 = a
@@ -82,20 +82,25 @@ L'algorithme d'Euclide calcule le pgcd de deux entier a et b en effectuant au ma
 
 
 
-||||||||||||||||||||||||||||||||||||||||-Declaration securisées-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+||||||||||||||||||||||||||||||||||||||||-Declaration securisées-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 
 
-==========================Exercice 3 - Manipulations de Structures Securisées===================================================
+==========================Exercice 3 - Manipulations de Structures Securisées=========================================================================================================================================
 
 
--------------Manipulation de cles------------------------------------------------------------------
+-------------Manipulation de cles---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 q.3.1.  Les deux entiers long declares dans la structures correspondent ou bien à la cle privee ou à la cle publique.
 
 q.3.2. La cle est supposé alloué. Donc, il est inutile de passer par un mallocce qui evite d'autre part les fuites memoires
         dans notre programme.(Utilisation de gdb recommandé sur cette question)
 
+q.3.3. ( en cours + la suite des questions)
 
+
+-----------------------SIGNATURES---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+q 3.5. (en cours)
 
 

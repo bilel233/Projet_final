@@ -67,7 +67,7 @@ long modpow(long a, long m, long n){
 long random_prime_number(int low_size, int up_size, int k){
     //retourne un nombre premier de taille comprise entre low size et up size
     long low =(long)(power(2,low_size-1));
-    long up = (long)(power(2,up_size -1));
+    long up = (long)(power(2,up_size)-1);
     long res = rand_long(low,up);
     while(is_prime_miller(res,k)==0){
         res = rand_long(low,up);
@@ -97,7 +97,7 @@ long rand_long(long low,long up){
     /* renvoie un entier generes aleatoirement entre low et up
         */
 
-    long val = (long) rand() % (up-low+1)-low;
+    long val =  (long)rand() % ((up-low+1))-low;
     return val;
 }
 long power(long a,long b){

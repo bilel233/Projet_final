@@ -3,18 +3,19 @@
 
 
 
-long extended_gcd(long a,long t,long *u, long *v){
+long extended_gcd(long s,long t,long *u, long *v){
     /* donnne la valeur des entier u et v par la methode de l'algorithme d'euclide etendu */
-    if(a == 0){
+    if(s == 0){
         *u =0;
         *v =1;
         return t;
-    }
+    }// cas de base
+
     long uPrim, vPrim;
-    long gcd = extended_gcd(t%a,a,&uPrim,&vPrim);
-    *u = vPrim -(t/a)*uPrim;
+    long gcd = extended_gcd(t%s,s,&uPrim,&vPrim);
+    *u = vPrim -(t/s)*uPrim;
     *v = uPrim;
-    return uPrim;
+    return gcd;
 }
 
 void generate_key_values(long p,long q,long* n,long *s,long* u){
@@ -27,7 +28,7 @@ void generate_key_values(long p,long q,long* n,long *s,long* u){
     while (extended_gcd(*s,t,u,&v)!=1){
         *s = rand_long(2,t);
     }
-    return;
+    
 }
 // alloc dynamique
 long* encrypt(char* chaine, long s, long n)
@@ -35,20 +36,14 @@ long* encrypt(char* chaine, long s, long n)
     /* chiffre une chaine de caractere a l'aide de la cle publique 
         */
 	long *tab=malloc(sizeof(long)*strlen(chaine));
-    	if(!tab)
-	{
-      		fprintf(stderr,"erreur allocation\n");
-      		return NULL;
-    	}
-    	
-    	for (int i=0;i<strlen(chaine); i++){
-	
-      		tab[i]=modpow((long)chaine[i],s,n);
-      		
-      		
-    	}
-    	
-	return tab;
+    int i = 0;
+    	while(chaine[i]!='\0'){
+            int c = (int)chaine[i]; // on caste le caractere c en entier
+            long val = (long)c;
+            tab[i]=modpow(val,s,n);
+        }
+    return tab;
+
 } 
 // alloc dynamique
 char* decrypt(long* crypted,int size, long u, long n)
