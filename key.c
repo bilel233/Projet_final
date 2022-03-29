@@ -42,7 +42,7 @@ char* key_to_str(KEY* key){
     /* passe d'une variable de type KEY a sa representation sous forme de chaine de caractere
         */
     char *val=(char*)malloc(sizeof(char)*256);
-    if (vall == NULL) return NULL;
+    if (val == NULL) return NULL;
     sprintf(val,"(%lx,%lx",key->m,key->n);
     return val;
 }

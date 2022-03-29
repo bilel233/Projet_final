@@ -136,6 +136,7 @@ int is_prime_miller(long p, int k){
     return 1;
 }
     
-int main(){
+/*int main(){
     return 0;
 }
+*/
