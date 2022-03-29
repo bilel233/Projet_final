@@ -1,8 +1,6 @@
 #include"rsa.h"
 #define DESTINATION 60
 
-
-
 long extended_gcd(long s,long t,long *u, long *v){
     /* donnne la valeur des entier u et v par la methode de l'algorithme d'euclide etendu */
     if(s == 0){
@@ -41,6 +39,7 @@ long* encrypt(char* chaine, long s, long n)
             int c = (int)chaine[i]; // on caste le caractere c en entier
             long val = (long)c;
             tab[i]=modpow(val,s,n);
+            i++;
         }
     return tab;
 
@@ -50,16 +49,17 @@ char* decrypt(long* crypted,int size, long u, long n)
 {	
     /* dechiffre un message a l'aide de la cle secrete */
 	char *res=malloc(sizeof(char)*(size+1));
-    char *dest = (char*)malloc(sizeof(char)*DESTINATION);
-    if (res == NULL && dest == NULL) return NULL;
+    int i;
+    if (res == NULL) return NULL;
     else{
   	    for(int i=0;i<size;i++)
 	    {
     	    res[i]=(char)modpow(crypted[i],u,n);
   	    }
+
     }
-      strcat(dest,res);
-    return dest;   
+      res[size]='\0';
+      return res;
 }
 
 int main(){
