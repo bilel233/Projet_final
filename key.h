@@ -2,7 +2,7 @@
 #define KEY_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "rsa.h"
+#include "rsa.c"
 #include"proj.h"
 #include <math.h>
 #include <time.h>
@@ -18,6 +18,13 @@ typedef struct signature{
     long* content;
     long size;
 }SIGNATURE;
+
+typedef struct protected{
+    KEY *pKey;
+    char *mess;
+    SIGNATURE* sgn;
+}Protected;
+
 
 void init_key(KEY* key, long val, long n);
 void init_pair_keys(KEY* pkey, KEY* skey, long low_size,long up_size);
