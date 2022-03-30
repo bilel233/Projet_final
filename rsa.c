@@ -1,5 +1,5 @@
 #include"rsa.h"
-
+#include "proj.c"
 
 long extended_gcd(long s,long t,long *u, long *v){
     /* donnne la valeur des entier u et v par la methode de l'algorithme d'euclide etendu */
@@ -61,18 +61,15 @@ char* decrypt(long* crypted,int size, long u, long n)
       res[size]='\0';
       return res;
 }
-void print_long_vector(long* result , int size){
-    printf(" Vector :[ ");
-    for(int i=0; i<size ; i++){
-        printf("%lx\t ", result[i]);
-        } 
-        printf(" ]\n");
+void print_long_vector(long *result , int size ){ 
+	printf ("Vector: [ "); 
+  	for(int i =0; i < size ; i ++)
+	{
+    		printf("%lx \t", result[i]);
+  	} 
+  	printf ("] \n");
 }
 
-/*int main(){
-    printf("long = %ld octets\n",sizeof(long));
-    printf("int = %lu octets\n",sizeof(int));
-   
-    return 0;
-}
-*/
+
+
+
