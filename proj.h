@@ -7,6 +7,7 @@
 #include <time.h>
 #include <stdint.h>
 #include <assert.h>
+
 // prototype des fonctions
 int is_prime_naive(long p);
 long plus_grand();
@@ -19,4 +20,6 @@ long rand_long(long low,long up);
 long random_prime_number(int low_size, int up_size, int k);
 long power(long a,long b);
 int is_prime_miller(long p, int k);
+
 #endif
+
