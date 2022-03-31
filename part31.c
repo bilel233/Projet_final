@@ -189,3 +189,22 @@ long random_prime_number(int low_size, int up_size, int k)
   	return p;
 }
 
+
+long modpow(long a,long m,long n)
+{
+	if(m==1)
+	{
+		return a%n;
+	}
+
+	if( m % 2 == 0)
+	{
+		long b= modpow(a, m/2, n);
+		return b* b % n;
+	}
+	else
+	{
+		long b=modpow(a,floor(m/2),n);
+		return a * b * b % n;
+	}
+}
