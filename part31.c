@@ -177,3 +177,15 @@ void free_protected(Protected* pr){
     free(pr);
 }
 
+
+long random_prime_number(int low_size, int up_size, int k)
+{  
+	long p=rand_long(pow(2,low_size-1),pow(2,up_size)-1);
+
+	while(is_prime_miller(p,k)==0)
+	{
+		p=rand_long(pow(2,low_size-1),pow(2,up_size)-1);
+  	}
+  	return p;
+}
+
