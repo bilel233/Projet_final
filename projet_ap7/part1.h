@@ -1,5 +1,5 @@
-#ifndef PROJ_H
-#define PROJ_H
+#ifndef PART1_H
+#define PART1.H
 
 #include <stdlib.h>
 #include <stdio.h>

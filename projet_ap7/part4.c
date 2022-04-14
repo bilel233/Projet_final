@@ -221,3 +221,19 @@ void delete_list_protected(CellProtected* c)
         c=tmp;
     }  
 }
+
+HashCell* create_hashcell(KEY* key){
+    /*alloue une cellule de la table de hachage puis initialise tout ses champs */
+    HashCell *c = (HashCell*)malloc(sizeof(HashCell));
+    if(c==NULL) return NULL;
+    // on instancie les champs de la cellule
+    c->key=key;
+    c->val=0;
+return c;
+
+}
+
+int hash_function(KEY* key, int size){
+    /* retourne la position d’un élément dans la table de hachage. */
+   return (key->m + key->n) % size;
+}

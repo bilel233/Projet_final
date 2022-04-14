@@ -1,5 +1,5 @@
-#ifndef KEY_H
-#define KEY_H
+#ifndef PART3_H
+#define PART3_H
 #include <stdio.h>
 #include <stdlib.h>
 #include "part2.h"
@@ -39,9 +39,5 @@ int verify(PROTECTED* pr);
 PROTECTED* init_protected(KEY* pKey, char* mess, SIGNATURE* sgn);
 char *protected_to_str(PROTECTED * pr);
 void free_protected(PROTECTED* pr);
-
-
-
-
 
 #endif

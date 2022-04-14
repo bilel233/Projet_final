@@ -1,3 +1,6 @@
+#ifndef PART4.H
+#define PART4.H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "part2.h"
@@ -39,3 +42,6 @@ CellProtected* read_protected(char* fic);
 void print_list_protected(CellProtected* c);
 void delete_cell_protected(CellProtected* c);
 void delete_list_protected(CellProtected* c);
+HashCell* create_hashcell(KEY* key);
+int hash_function(KEY* key, int size);
+#endif
