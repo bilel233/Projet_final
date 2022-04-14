@@ -1,4 +1,4 @@
-#include"part2.h"
+#include "part2.h"
 
 
 long extended_gcd(long s,long t,long *u, long *v){

@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "part2.h"
-#include"part1.h"
-#include "part3.h"
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include "part1.h"
+#include "part2.h"
+#include "part3.h"
 
 typedef struct cellKey {
     KEY * data ;

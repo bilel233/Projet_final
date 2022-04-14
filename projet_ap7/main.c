@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "part2.h"
 #include <time.h>
 #include <math.h>
+#include "part1.h"
+#include "part2.h"
 #include "part3.h"
 #include "part4.h"
-#include "part1.h"
 
 void generate_random_data(int nv,int nc){
     /* genere des couples de cles puis realisela creation de fichiers */
@@ -176,7 +176,7 @@ char** tabCleCand2 =malloc(nv * sizeof(char*));
 int main()
 {
     //srand(time(NULL));
-    //generate_random_data(100,20);
+    generate_random_data(100,20);
 
     //CellKey *ckey=read_public_keys("keys.txt");
     //print_list_keys(ckey);
