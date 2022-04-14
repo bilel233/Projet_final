@@ -237,3 +237,8 @@ int hash_function(KEY* key, int size){
     /* retourne la position d’un élément dans la table de hachage. */
    return (key->m + key->n) % size;
 }
+
+find_position(HashTable* t, KEY* key){
+    /* cherche dans la table s’il existe un élément dont la clé publique est key */
+
+}

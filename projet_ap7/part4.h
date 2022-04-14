@@ -44,4 +44,5 @@ void delete_cell_protected(CellProtected* c);
 void delete_list_protected(CellProtected* c);
 HashCell* create_hashcell(KEY* key);
 int hash_function(KEY* key, int size);
+int find_position(HashTable* t, KEY* key);
 #endif
