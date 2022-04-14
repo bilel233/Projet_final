@@ -4,7 +4,7 @@ CC = gcc
 PROGRAMS = main
 
 main : main.o part1.o part2.o part3.o part4.o
-	$(CC) -c $(CFLAGS) part1.c
+	$(CC) -o main  $(CFLAGS) main.o 
 
 
 part1.o : part1.c part1.h
