@@ -20,7 +20,7 @@ void generate_random_data(int nv,int nc){
         FILE *f3;
         f1 = fopen("keys.txt","w");
         f2 = fopen("candidates.txt","w");
-        f1 = fopen("declarations.txt","w");
+        f3= fopen("declarations.txt","w");
 
         if (f1 == NULL || f2 == NULL || f3 == NULL){
             printf("geneate random data : e'rreur d'ouverture \n");
@@ -176,6 +176,8 @@ char** tabCleCand2 =malloc(nv * sizeof(char*));
 int main()
 {
     //srand(time(NULL));
+
+	
     generate_random_data(100,20);
 
     //CellKey *ckey=read_public_keys("keys.txt");

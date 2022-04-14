@@ -1,5 +1,5 @@
-#ifndef PART4.H
-#define PART4.H
+#ifndef PART4_H
+#define PART4_H
 
 #include <stdio.h>
 #include <stdlib.h>

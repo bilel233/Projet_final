@@ -47,7 +47,7 @@ CellKey* read_public_keys(char* filename){
 
     while (fgets(buffer, 256, file))
     {
-        sscanf(buffer, "(%lx,%lx)", &p, &n);
+        sscanf(buffer, "(%ld,%ld)", &p, &n);
         KEY* publicKey =malloc(sizeof(KEY));
         init_key(publicKey, p, n);
 
