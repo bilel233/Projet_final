@@ -238,7 +238,47 @@ int hash_function(KEY* key, int size){
    return (key->m + key->n) % size;
 }
 
-find_position(HashTable* t, KEY* key){
+int find_position(HashTable* t, KEY* key){
     /* cherche dans la table s’il existe un élément dont la clé publique est key */
+    HashCell **v = t->tab;
+    HashCell *d = &v;
+    for (int i=0;i< t->size;i++){ // parcourt de la table de hachage
+        if (key != d->key){
+            //renvoie de la position de l'element
+            int pos = hash_function(d->key,t->size);
+            return pos;
+        }
+        else{
+            //resolution par probing lineaire
+            HashCell** n;
+            n = t->tab;
+            n[d->key,i]+= i%(t->size); // les scans du tableaux sont longs
+        }
+    }
+    return hash_function(d->key,t->size); //position actuelle
+}
+//allocation via malloc
+HashTable* create_hashtable(CellKey* keys, int size){
+    /* cree et initialise une table de hachage de taille size */
 
+    HashTable* T = (HashTable*)malloc(sizeof(HashTable)*size);
+    if (T == NULL){
+        printf("erreur d'allocation\n");
+        return NULL;
+    }
+    HashCell* c = T->tab;
+    for(int i=0;i<size;i++){ // parcourt de la table de hachage
+        keys = create_cell_key(c->key);
+        // une celllule specifique est creee selon la cle key
+    }
+    return T;
+}
+void delete_hashtable(HashTable* t){
+    /* supprime une table de hachage */
+    HashCell* c = t->tab;
+    if (t != NULL){
+        free(t->tab);
+        free(c->key);
+        free(t);
+    }
 }

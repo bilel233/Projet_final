@@ -11,7 +11,7 @@
 #include "part3.h"
 
 typedef struct cellKey {
-    KEY * data ;
+    KEY* data ;
     struct cellKey * next ;
  } CellKey ;
 
@@ -25,13 +25,13 @@ HashCell**tab;
 int size;
 }HashTable;
 
- CellKey* create_cell_key(KEY* key);
+
 
 typedef struct cellProtected {
     PROTECTED * data ;
     struct cellProtected * next ;
 } CellProtected ;
-
+CellKey* create_cell_key(KEY* key);
 CellProtected* inserer_tete_P(CellProtected* cp,PROTECTED* p);
 CellKey * ajouter_tete(CellKey ** list ,KEY *k);
 CellKey* read_public_keys(char* filename);
@@ -45,4 +45,6 @@ void delete_list_protected(CellProtected* c);
 HashCell* create_hashcell(KEY* key);
 int hash_function(KEY* key, int size);
 int find_position(HashTable* t, KEY* key);
+HashTable* create_hashtable(CellKey* keys, int size);
+void delete_hashtable(HashTable* t);
 #endif
