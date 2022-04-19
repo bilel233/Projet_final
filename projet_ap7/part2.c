@@ -49,7 +49,7 @@ char* decrypt(long* crypted,int size, long u, long n)
 {	
     /* dechiffre un message a l'aide de la cle secrete */
 	char *res=malloc(sizeof(char)*(size+1));
-    int i;
+    
     if (res == NULL) return NULL;
     else{
   	    for(int i=0;i<size;i++)

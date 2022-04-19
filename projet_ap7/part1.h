@@ -21,3 +21,5 @@ long power(long a,long b);
 int is_prime_miller(long p, int k);
 long randomprime(int low_size,int up_size,int k);
 #endif
+
+

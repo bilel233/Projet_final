@@ -25,8 +25,6 @@ HashCell**tab;
 int size;
 }HashTable;
 
-
-
 typedef struct cellProtected {
     PROTECTED * data ;
     struct cellProtected * next ;
@@ -47,4 +45,9 @@ int hash_function(KEY* key, int size);
 int find_position(HashTable* t, KEY* key);
 HashTable* create_hashtable(CellKey* keys, int size);
 void delete_hashtable(HashTable* t);
+
 #endif
+
+
+
+

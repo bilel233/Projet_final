@@ -39,5 +39,9 @@ int verify(PROTECTED* pr);
 PROTECTED* init_protected(KEY* pKey, char* mess, SIGNATURE* sgn);
 char *protected_to_str(PROTECTED * pr);
 void free_protected(PROTECTED* pr);
+void generate_random_data(int nv,int nc);
 
 #endif
+
+
+/*laisser des lignes vides afin de faires disparaitres les warnings */
