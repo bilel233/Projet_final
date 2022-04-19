@@ -297,12 +297,11 @@ HashTable *create_hashtable(CellKey *keys, int size)    {
     }
     return table;
 }
-void delete_hashtable(HashTable* t){
-    /* supprime une table de hachage */
-    HashCell* c = t->tab;
-    if (t != NULL){
-        free(t->tab);
-        free(c->key);
-        free(t);
+void delete_hashtable(HashTable *t) {
+    for (int i=0; i<t->size; i++)   {
+        //on ne libere pas la cle
+        free(t->tab[i]);
     }
+    free(t->tab);
+    free(t);
 }
