@@ -238,40 +238,64 @@ int hash_function(KEY* key, int size){
    return (key->m + key->n) % size;
 }
 
-int find_position(HashTable* t, KEY* key){
-    /* cherche dans la table s’il existe un élément dont la clé publique est key */
-    HashCell **v = t->tab;
-    HashCell *d = &v;
-    for (int i=0;i< t->size;i++){ // parcourt de la table de hachage
-        if (key != d->key){
-            //renvoie de la position de l'element
-            int pos = hash_function(d->key,t->size);
-            return pos;
+int find_position(HashTable *t, KEY *key)   {
+    //collisions gerees par probing lineaire
+    assert(key != NULL);
+    int indice = hash_function(key, t->size);
+    assert(indice >= 0);
+    
+    int i=0;
+    while(i < t->size)    {
+        assert(((indice + i) % t->size) >= 0);
+        //on parcourt au plus toute la table a partir de la case indice (hash + 0)
+        if (t->tab[(indice + i) % t->size] != NULL) {
+            //key->m correspond a key->val (le nom etait dans les exemples et non dans l'enonce)
+            if (  (t->tab[(indice + i) % t->size]->key->m == key->m) && (t->tab[(indice + i) % t->size]->key->n == key->n)  ) {
+                return (indice + i) % t->size; //la cle est deja presente dans la table
+            } 
+        } else { 
+            return (indice + i) % t->size; //emplacement libre pour inserer la cle
         }
-        else{
-            //resolution par probing lineaire
-            HashCell** n;
-            n = t->tab;
-            n[d->key,i]+= i%(t->size); // les scans du tableaux sont longs
-        }
+        i++;
     }
-    return hash_function(d->key,t->size); //position actuelle
+    fprintf(stderr,"Erreur : find_position : pas de position trouvee\n");
+    return -1;  //indication d'erreur
 }
 //allocation via malloc
-HashTable* create_hashtable(CellKey* keys, int size){
-    /* cree et initialise une table de hachage de taille size */
 
-    HashTable* T = (HashTable*)malloc(sizeof(HashTable)*size);
-    if (T == NULL){
-        printf("erreur d'allocation\n");
-        return NULL;
+HashTable *create_hashtable(CellKey *keys, int size)    {
+    //creation de la table de hachage
+
+    HashTable *table = (HashTable *)malloc(sizeof(HashTable));
+    table->tab = (HashCell **)malloc(size*sizeof(HashCell *));
+
+    for (int i=0; i<size; i++)  {
+        table->tab[i] = NULL;
     }
-    HashCell* c = T->tab;
-    for(int i=0;i<size;i++){ // parcourt de la table de hachage
-        keys = create_cell_key(c->key);
-        // une celllule specifique est creee selon la cle key
+    table->size = size;
+
+    //insertion des cles de la liste keys
+    int pos;
+    while (keys)    {
+        pos = find_position(table, keys->data);
+
+        if (pos == -1)  {
+            printf( "Erreur : create_hashtable, pas de position trouvee\n");
+            for (int i=0; i<table->size; i++)   {
+                free(table->tab[i]);
+            }
+            free(table->tab);
+            free(table);
+            return NULL;
+        }
+        //Si la cle n'est pas dans la table on l'ajoute
+        if (table->tab[pos] == NULL)    {    
+            HashCell *candidate = create_hashcell(keys->data);
+            table->tab[pos] = candidate;
+        }
+        keys = keys->next;
     }
-    return T;
+    return table;
 }
 void delete_hashtable(HashTable* t){
     /* supprime une table de hachage */
