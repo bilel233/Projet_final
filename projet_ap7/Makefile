@@ -3,7 +3,7 @@ CC = gcc
 
 PROGRAMS = main
 
-main : main.o part1.o part2.o part3.o part4.o
+main : main.o part1.o part2.o part3.o part4.o main1.o
 	$(CC) -o main  $(CFLAGS) main.o  part1.o part2.o part3.o part4.o -lm
 
 
@@ -21,6 +21,12 @@ part4.o : part4.c part4.h
 
 main.o : main.c part1.o part2.o part3.o part4.o
 	$(CC) -c $(CFLAGS) main.c
+
+main1.o : part1.o
+	$(CC) -c $(CFLAGS) part1.c
+main2.o : part1.o part2.o
+	$(CC) -c $(CFLAGS) part1.c part2.c 
+
 
 cleanall: 
 	rm -f *.o main *.txt

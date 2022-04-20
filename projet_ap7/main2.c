@@ -7,30 +7,67 @@
 
 
 int main(){
-    long p=random_prime_number(3,5,50);
-    long q=random_prime_number(3,5,50);
+    srand(time(NULL));
 
-    long n,s,u;
+    //Testing Init Keys
+    KEY * pKey = malloc(sizeof(KEY));
+    KEY * sKey = malloc(sizeof(KEY));
+    init_pair_keys( pKey , sKey ,3 ,7);
+    printf("%lx\n",pKey->n);
+    printf("pKey : %lx , %lx\n", pKey->m,pKey->n) ;
+    printf ("sKey : %lx , %lx\n",sKey->m,sKey->n) ;
+
+    //Testing Key Serialization
+
+    char *chaine= key_to_str(pKey);
+    printf ("key to str: %s \n",chaine);
+    KEY *k = str_to_key(chaine);
+    printf ("str to key : %lx , %lx\n",k->m,k->n);
+
+    //Testing signature
+    //Candidate keys:
+    KEY *pKeyC =malloc(sizeof(KEY));
+    KEY *sKeyC =malloc(sizeof(KEY));
+    init_pair_keys(pKeyC,sKeyC,3,7);
+    //Declaration:
+    char *mess= key_to_str(pKeyC);
+    printf("mess:%s\n",mess);
+    printf ("%s vote pour %s \n", key_to_str(pKey),mess);
+    SIGNATURE *sgn=sign(mess , sKey);
+    printf ("signature: ") ;
+    print_long_vector(sgn->content,sgn->size);
+    chaine = signature_to_str(sgn);
+    printf ("signature to str : %s \n",chaine);
+    sgn = str_to_signature(chaine);
+    printf ("str to signature");
+    print_long_vector(sgn->content ,sgn->size);
+
+
+    //Testing protected:
+    PROTECTED * pr = init_protected(pKey,mess,sgn);
+    //Verification:
+    if(verify(pr)) 
+    {
+        printf("Signature valide\n");
+    }
+    else 
+    {
+        printf("Signature non valide\n");
+    }
+    chaine = protected_to_str(pr);
+    printf ("protected to str: %s\n", chaine);
+    pr = str_to_protected(chaine);
+    printf("str to protected : %s %s %s \n",key_to_str(pr->pKey),pr->mess,signature_to_str(pr->s));
+
     
-    /* s pub u prive*/
+    free(mess);
+    free(chaine);
+    free(pr->mess);
+    free(pr);
+    free(pKey);
+    free(sKey);
+    free(pKeyC);
+    free(sKeyC);
+    return 0;
 
-    generate_key_values(p,q,&n,&s,&u);
-
-    printf (" cle publique= (%lx,%lx ) \n",s,n);
-  	printf (" cle privee= (%lx,%lx ) \n",u,n);
-
-
-    char mess[10] ="sup";
-  	int len=strlen(mess);
-  	long *crypted = encrypt(mess, s, n);
-
-  	printf("Initial message: %s \n",mess);
-  	printf("Encoded representation : \n");
-  	print_long_vector(crypted,len);
-
-  	//dechiffrement
-  	char* decoded=decrypt(crypted,len,u,n);
-  	printf("Decoded:%s\n",decoded);
-  
-  	return 0;
 }
