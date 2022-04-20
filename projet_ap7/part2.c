@@ -33,9 +33,9 @@ long* encrypt(char* chaine, long s, long n)
 {
     /* chiffre une chaine de caractere a l'aide de la cle publique 
         */
-	long *tab=malloc(sizeof(long)*strlen(chaine));
+    long *tab=malloc(sizeof(long)*strlen(chaine));
     int i = 0;
-    	while(chaine[i]!='\0'){
+        while(chaine[i]!='\0'){
             int c = (int)chaine[i]; // on caste le caractere c en entier
             long val = (long)c;
             tab[i]=modpow(val,s,n);
@@ -46,27 +46,30 @@ long* encrypt(char* chaine, long s, long n)
 } 
 // alloc dynamique
 char* decrypt(long* crypted,int size, long u, long n)
-{	
+{   
     /* dechiffre un message a l'aide de la cle secrete */
-	char *res=malloc(sizeof(char)*(size+1));
-    
+    char *res=malloc(sizeof(char)*(size+1));
+
     if (res == NULL) return NULL;
     else{
-  	    for(int i=0;i<size;i++)
-	    {
-    	    res[i]=(char)modpow(crypted[i],u,n);
-  	    }
+        for(int i=0;i<size;i++)
+        {
+            res[i]=(char)modpow(crypted[i],u,n);
+        }
 
     }   
       res[size]='\0';
       return res;
 }
 void print_long_vector(long *result , int size ){ 
-	printf ("Vector: [ "); 
-  	for(int i =0; i < size ; i ++)
-	{
-    		printf("%lx \t", result[i]);
-  	} 
-  	printf ("] \n");
+    printf ("Vector: [ "); 
+    for(int i =0; i < size ; i ++)
+    {
+            printf("%lx \t", result[i]);
+    } 
+    printf ("] \n");
 }
+
+
+
 

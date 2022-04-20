@@ -27,23 +27,23 @@ CellKey * ajouter_tete(CellKey ** list ,KEY *k){
 CellKey* read_public_keys(char* filename){
 
     if (strcmp(filename, "keys.txt") != 0 && strcmp(filename, "candidates.txt") != 0){
-		printf("Fonction read_public_keys: Erreur de fichier: %s\n", filename);
-		return NULL;
-	}
+        printf("Fonction read_public_keys: Erreur de fichier: %s\n", filename);
+        return NULL;
+    }
 
-	FILE* file = fopen(filename, "r");
-	if (!file)
-	{
-		printf("Fonction read_public_keys: Erreur ouverture fichier: %s\n", filename);
-		return NULL;
-	}
+    FILE* file = fopen(filename, "r");
+    if (!file)
+    {
+        printf("Fonction read_public_keys: Erreur ouverture fichier: %s\n", filename);
+        return NULL;
+    }
 
-	char buffer[256];
-	long p,n;
+    char buffer[256];
+    long p,n;
 
-	CellKey* cellKey = NULL;
+    CellKey* cellKey = NULL;
 
-	int count = 0;
+    int count = 0;
 
     while (fgets(buffer, 256, file))
     {
@@ -51,16 +51,16 @@ CellKey* read_public_keys(char* filename){
         KEY* publicKey =malloc(sizeof(KEY));
         init_key(publicKey, p, n);
 
-   	    if (!cellKey)
-   	    {
-   		    cellKey = create_cell_key(publicKey);
-   	    } 
+        if (!cellKey)
+        {
+            cellKey = create_cell_key(publicKey);
+        } 
         else 
         {
-   		    ajouter_tete(&cellKey, publicKey);
-   	    }
-   	    count++;
-   	    //printf("%d\t",count);
+            ajouter_tete(&cellKey, publicKey);
+        }
+        count++;
+        //printf("%d\t",count);
     }
     
     printf("total: %d\n",count);
@@ -239,10 +239,8 @@ int hash_function(KEY* key, int size){
 }
 
 int find_position(HashTable *t, KEY *key)   {
-    //collisions gerees par probing lineaire
-    assert(key != NULL);
+
     int indice = hash_function(key, t->size);
-    assert(indice >= 0);
     
     int i=0;
     while(i < t->size)    {
@@ -261,7 +259,6 @@ int find_position(HashTable *t, KEY *key)   {
     fprintf(stderr,"Erreur : find_position : pas de position trouvee\n");
     return -1;  //indication d'erreur
 }
-//allocation via malloc
 
 HashTable *create_hashtable(CellKey *keys, int size)    {
     //creation de la table de hachage
@@ -296,12 +293,58 @@ HashTable *create_hashtable(CellKey *keys, int size)    {
         keys = keys->next;
     }
     return table;
-}
-void delete_hashtable(HashTable *t) {
-    for (int i=0; i<t->size; i++)   {
-        //on ne libere pas la cle
-        free(t->tab[i]);
+}   
+KEY *compute_winner(CellProtected *decl, CellKey *candidates, CellKey *voters, int sizeC, int sizeV)    {
+   
+
+    //creation des deux tables de hachage candidats votants
+    HashTable *hc = create_hashtable(candidates,sizeC);
+    HashTable *hv = create_hashtable(voters, sizeV);
+
+    //parcours des declarations
+    int posV, posC;
+    KEY *keyC;
+
+    //parcours de la liste de declarations
+    while (decl)    {
+        posV = find_position(hv, decl->data->pKey); 
+        if (hv->tab[posV] != NULL)   {
+            if (hv->tab[posV]->val == 0) {            //il n'a jamais vote
+                keyC = str_to_key(decl->data->mess);
+                posC = find_position(hc,keyC);
+                free(keyC);
+                if(hc->tab[posC] != NULL)   {     //si le candidat existe
+                    hv->tab[posV]->val = 1;       //il a vote
+                    hc->tab[posC]->val = hc->tab[posC]->val + 1; //le candidat a un vote de plus              
+
+                }
+            }   
+        }
+        decl = decl->next;
     }
-    free(t->tab);
-    free(t);
+
+    //determination du gagnant    //ET SI DEUX CANDIDATS SONT EX AEQUO --on prend le premier dans la table
+    HashCell *gagnant = NULL;
+    int val_gagnant = -1;
+    for (int i=0; i<hc->size; i++)  {
+        if (hc->tab[i] != NULL){
+            if (val_gagnant < hc->tab[i]->val) {
+                gagnant = hc->tab[i];
+                val_gagnant = hc->tab[i]->val;
+            }
+        }
+    }
+    if (gagnant == NULL){
+        fprintf(stderr,"Erreur : compute_winner : gagnant null");
+    }
+
+    KEY *g = gagnant->key;
+    //on ne free pas les cles qui sont stockes egalement dans les listes 
+    delete_hashtable(hc);   
+    delete_hashtable(hv);
+    return g;
 }
+
+
+
+

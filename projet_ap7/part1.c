@@ -53,21 +53,21 @@ long modpow_naive(long a, long m, long n){
 
 long modpow(long a,long m,long n)
 {
-	if(m==1)
-	{
-		return a%n;
-	}
+    if(m==1)
+    {
+        return a%n;
+    }
 
-	if( m % 2 == 0)
-	{
-		long b= modpow(a, m/2, n);
-		return b* b % n;
-	}
-	else
-	{
-		long b=modpow(a,floor(m/2),n);
-		return a * b * b % n;
-	}
+    if( m % 2 == 0)
+    {
+        long b= modpow(a, m/2, n);
+        return b* b % n;
+    }
+    else
+    {
+        long b=modpow(a,floor(m/2),n);
+        return a * b * b % n;
+    }
 }
 
 
@@ -131,13 +131,13 @@ int is_prime_miller(long p, int k){
     
 long random_prime_number(int low_size, int up_size, int k)
 {  
-	long p=rand_long(pow(2,low_size-1),pow(2,up_size)-1);
+    long p=rand_long(pow(2,low_size-1),pow(2,up_size)-1);
 
-	while(is_prime_miller(p,k)==0)
-	{
-		p=rand_long(pow(2,low_size-1),pow(2,up_size)-1);
-  	}
-  	return p;
+    while(is_prime_miller(p,k)==0)
+    {
+        p=rand_long(pow(2,low_size-1),pow(2,up_size)-1);
+    }
+    return p;
 }
 
 long randomprime(int low_size,int up_size,int k){
@@ -153,5 +153,9 @@ long randomprime(int low_size,int up_size,int k){
     }
     return p;
 }
+
+
+
+
 
 
